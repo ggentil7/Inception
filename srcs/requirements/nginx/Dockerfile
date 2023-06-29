@@ -7,7 +7,7 @@ RUN     apt-get install -y nginx \
 
 # nginx SSL
 RUN     mkdir /etc/nginx/ssl
-RUN     RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+RUN     openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
         -out /etc/nginx/ssl/ggentil.crt \
         -keyout /etc/nginx/ssl/ggentil.key \
         -subj "/C=CH/ST=Vaud/L=Renens/O=42 Lausanne/OU=ggentil/CN=ggentil"
@@ -15,7 +15,7 @@ RUN     RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
 # nginx config
-#RUN mkdir -p /run/nginx
+RUN mkdir -p /run/nginx
 
 #the only port allowed
 EXPOSE	443
