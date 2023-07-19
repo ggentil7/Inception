@@ -16,7 +16,7 @@ services:
     volumes:
       - /data/html:/var/www/html
     depends_on:
-      - mariadb
+      - mysql
     environment:
       WORDPRESS_DB_HOST: mysql
       MYSQL_ROOT_PASSWORD: mysql_root_pass
