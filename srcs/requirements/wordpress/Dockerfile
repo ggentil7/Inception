@@ -1,0 +1,3 @@
+FROM wordpress:php7.3-fpm-alpine
+
+CMD ["/bin/bash"]

@@ -1,42 +1,46 @@
 version: '3'
 services:
-  mysql:
+  mariadb:
     image: mariadb
     volumes:
-      - /data/mysql:/var/lib/mysql
+      - mariadb_volume:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: mysql_root_pass
-      MYSQL_DATABASE: db_name
-      MYSQL_USER: user_name
-      MYSQL_PASSWORD: user_pass
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: superdb
+      MYSQL_USER: ggentil
+      MYSQL_PASSWORD: my1234
     restart: always
 
   wordpress:
     image: wordpress:php7.3-fpm-alpine
     volumes:
-      - /data/html:/var/www/html
+      - wordpress_volume:/var/www/html
     depends_on:
-      - mysql
+      - mariadb
     environment:
-      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_HOST: mariadb
       MYSQL_ROOT_PASSWORD: mysql_root_pass
       WORDPRESS_DB_NAME: db_name
       WORDPRESS_DB_USER: user_name
       WORDPRESS_DB_PASSWORD: user_pass
       WORDPRESS_TABLE_PREFIX: wp_
     links:
-      - mysql
+      - mariadb
     restart: always
 
   nginx:
     build: ./requirements/nginx
     volumes:
       - nginx:/etc/nginx/conf.d
-      - /data/html:/var/www/html
     ports:
-      - 8080:80
+      - "443:443"
     links:
       - wordpress
 
 volumes:
+  mariadb_volume:
+    driver: local
+  wordpress_volume:
+    driver: local
   nginx:
+
