@@ -10,9 +10,9 @@ services:
       MYSQL_USER: ggentil
       MYSQL_PASSWORD: my1234
     restart: always
-      ports:
-     - 3306:3306
-     networks:
+    ports:
+      - 3306:3306
+    networks:
       - network
 
   wordpress:
@@ -35,7 +35,7 @@ services:
   nginx:
     build: ./requirements/nginx
     volumes:
-      - nginx:/etc/nginx/conf.d
+      - nginx_volume:/var/www/html
     ports:
       - "443:443"
     links:
@@ -44,8 +44,12 @@ services:
 volumes:
   mariadb_volume:
     driver: local
+
   wordpress_volume:
     driver: local
+    
+  nginx_volume:
+    driver: local 
 
 networks:
   network:
