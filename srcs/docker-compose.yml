@@ -1,7 +1,7 @@
 version: '3'
 services:
   mariadb:
-    image: mariadb
+    build: requirements/mariadb
     volumes:
       - mariadb_volume:/var/lib/mysql
     environment:
@@ -10,6 +10,10 @@ services:
       MYSQL_USER: ggentil
       MYSQL_PASSWORD: my1234
     restart: always
+      ports:
+     - 3306:3306
+     networks:
+      - network
 
   wordpress:
     image: wordpress:php7.3-fpm-alpine
@@ -42,5 +46,7 @@ volumes:
     driver: local
   wordpress_volume:
     driver: local
-  nginx:
+
+networks:
+  network:
 
