@@ -1,3 +1,3 @@
-FROM wordpress:php7.3-fpm-alpine
+FROM debian:buster
 
 CMD ["/bin/bash"]

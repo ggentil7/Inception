@@ -10,5 +10,7 @@ COPY my_conf.cnf /etc/mysql
 COPY my_conf.cnf /etc/my_conf.cnf
 COPY "./mariadb.sh" .
 
+RUN chmod +x mariadb.sh
+
 
 CMD ["./mariadb.sh"]
