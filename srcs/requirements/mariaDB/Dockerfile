@@ -5,9 +5,9 @@ RUN apt-get install -y mariadb-server \
     zsh \
     vim 
 
-COPY my_conf.cnf /etc/mysql/mariadb.conf.d/
+COPY my_conf.cnf /etc/mysql/mariadb.conf.d/my_conf.cnf 
 
-COPY "./mariadb.sh" .
+COPY mariadb.sh /
 
 RUN chmod +x mariadb.sh
 

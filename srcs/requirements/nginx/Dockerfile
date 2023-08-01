@@ -10,15 +10,15 @@ RUN     mkdir /etc/nginx/ssl
 RUN     openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
         -out /etc/nginx/ssl/ggentil.crt \
         -keyout /etc/nginx/ssl/ggentil.key \
-        -subj "/C=CH/ST=Vaud/L=Renens/O=42 Lausanne/OU=ggentil/CN=ggentil"
-
-COPY ./conf/nginx.conf /etc/nginx/conf.d
+        -subj "/C=CH/ST=Vaud/L=Renens/O=42/OU=ggentil/CN=ggentil.42.fr/UID=login"
 
 # nginx config
-RUN mkdir -p /run/nginx
+RUN mkdir -p /var/run/nginx
 
-#the only port allowed
-EXPOSE	443
+COPY ./conf/default.conf /etc/nginx/conf.d
+
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -6,11 +6,6 @@ services:
       - mariadb_volume:/var/lib/mysql
     env_file:
       - .env
-    #environment:
-     # MYSQL_ROOT_PASSWORD: root1234
-     # MYSQL_DATABASE: superdb
-     # MYSQL_USER: ggentil
-     # MYSQL_PASSWORD: my1234
     restart: always
     expose:
       - "3306"
@@ -20,27 +15,28 @@ services:
   wordpress:
     build: requirements/wordpress
     volumes:
-      - wordpress_volume:/var/www/html
+      - wordpress_volume:/var/www/wordpress
     depends_on:
       - mariadb
-    environment:
-      WP_DATABASE: wpdb
-      WP_USER: wpmoi
-      WP_PASSWORD: wp1234
+    env_file:
+      - .env
     restart: always
+    expose:
+      - "9000"
     networks:
       - network
 
   nginx:
     build: ./requirements/nginx
     volumes:
-      - wordpress_volume:/var/www/html
+      - wordpress_volume:/var/www/wordpress
     ports:
       - "443:443"
-    links:
+    depends_on:
       - wordpress
     networks:
       - network
+    restart: always
 
 volumes:
   mariadb_volume:

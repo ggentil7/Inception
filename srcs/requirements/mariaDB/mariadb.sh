@@ -1,26 +1,4 @@
-#!/bin/sh
-
-#service mysql start;
-
-#sleep 5
-
-# Connexion et création de la base de données
-#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE ${MYSQL_DATABASE}"
-
-# Connexion et création de l'utilisateur
-#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}'"
-
-# Attribution des privilèges à l'utilisateur
-#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'"
-
-# Sauvegarde des privilèges
-#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES"
-
-# Démarrage du serveur MariaDB
-#exec mysqld_safe
-
-#sh
-
+#!/bin/bash
 
 service mysql start;
 sleep 5
