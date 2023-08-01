@@ -4,14 +4,16 @@ services:
     build: requirements/mariadb
     volumes:
       - mariadb_volume:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root1234
-      MYSQL_DATABASE: superdb
-      MYSQL_USER: ggentil
-      MYSQL_PASSWORD: my1234
+    env_file:
+      - .env
+    #environment:
+     # MYSQL_ROOT_PASSWORD: root1234
+     # MYSQL_DATABASE: superdb
+     # MYSQL_USER: ggentil
+     # MYSQL_PASSWORD: my1234
     restart: always
-    ports:
-      - 3306:3306
+    expose:
+      - "3306"
     networks:
       - network
 
@@ -32,7 +34,7 @@ services:
   nginx:
     build: ./requirements/nginx
     volumes:
-      - nginx_volume:/var/www/html
+      - wordpress_volume:/var/www/html
     ports:
       - "443:443"
     links:
@@ -47,8 +49,6 @@ volumes:
   wordpress_volume:
     driver: local
 
-  nginx_volume:
-    driver: local 
 
 networks:
   network:

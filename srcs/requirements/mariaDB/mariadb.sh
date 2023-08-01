@@ -1,30 +1,35 @@
 #!/bin/sh
 
-#mariadb-install-db
+#service mysql start;
 
-#mariadbd-safe --datadir='/var/lib/mysql' --no-watch
+#sleep 5
+
+# Connexion et création de la base de données
+#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE ${MYSQL_DATABASE}"
+
+# Connexion et création de l'utilisateur
+#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}'"
+
+# Attribution des privilèges à l'utilisateur
+#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'"
+
+# Sauvegarde des privilèges
+#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES"
+
+# Démarrage du serveur MariaDB
+#exec mysqld_safe
+
+#sh
 
 
 service mysql start;
-
 sleep 5
 
-mariadb -e "CREATE DATABASE $MYSQL_DATABASE"
-mariadb -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'"
-echo $MYSQL_PASSWORD
-mariadb -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* to '$MYSQL_USER'@'%'"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+mysql -u root -p"${MY_SQL_ROOT_PASSWORD}" -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql -u root -p"${MY_SQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql -u root -p"${MY_SQL_ROOT_PASSWORD}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MY_SQL_ROOT_PASSWORD}';"
+mysql -u root -p"${MY_SQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
+mysqladmin -u root -p"${MY_SQL_ROOT_PASSWORD}" shutdown
 
-mariadb -e "FLUSH PRIVILEGES"
-sleep 3
-#mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED VIA '' USING PASSWORD('$MYSQL_ROOT_PASSWORD')"
-mariadb -e ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
-
-sleep 3
-
-#pkill maria
-#sleep 3
-
-#mariadbd-safe --datadir='/var/lib/mysql'
-
-
-#sh
+exec mysqld_safe
